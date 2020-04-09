@@ -8,6 +8,7 @@ unsigned int num_words(char *line)
 {
 	int fldelim = 0;
 	unsigned int wc = 0;
+
 	while (*line)
 	{
 		if (*line == ' ')
@@ -30,6 +31,7 @@ unsigned int num_words(char *line)
 int _strlen(char *s)
 {
 	int numchars;
+
 	numchars = 0;
 	while (*(s + numchars) != '\0')
 	{
@@ -48,6 +50,7 @@ int _strlen(char *s)
 char *_strncpy(char *dest, char *src, int n)
 {
 	int i;
+
 	i = 0;
 	while (i < n && *(src + i))
 	{
@@ -96,6 +99,7 @@ char **line_to_av(char *line)
 	char **av;
 	int ac = 0;
 	int av_cnt = 0;
+
 	ac = num_words(line);
 	av = malloc(sizeof(char *) * (ac + 1));
 	if (av == NULL)

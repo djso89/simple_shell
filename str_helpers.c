@@ -100,6 +100,7 @@ char **line_to_av(char *line)
 	int ac = 0;
 	int av_cnt = 0;
 
+	line[_strlen(line) - 1] = '\0';
 	ac = num_words(line);
 	av = malloc(sizeof(char *) * (ac + 1));
 	if (av == NULL)
@@ -110,13 +111,13 @@ char **line_to_av(char *line)
 	word = strtok(line, " ");
 	while (word)
 	{
-		av[av_cnt] = malloc(strlen(word) + 1);
+		av[av_cnt] = malloc(_strlen(word) + 1);
 		if (av[av_cnt] == NULL)
 		{
 			free_av(av);
 			return (NULL);
 			}
-		strncpy(av[av_cnt], word, strlen(word) + 1);
+		_strncpy(av[av_cnt], word, _strlen(word) + 1);
 		word = strtok(NULL, " ");
 		av_cnt++;
 	}

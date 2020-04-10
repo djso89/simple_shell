@@ -1,17 +1,19 @@
 #include "kshell.h"
+
 /**
  * num_words - this function takes lines and counts number of words
  * @line: string line from the input
- * Return: Word counts
+ * @delim: delimiter char in between words
+* Return: Word counts
  */
-unsigned int num_words(char *line)
+unsigned int num_words(char *line, char delim)
 {
 	int fldelim = 0;
 	unsigned int wc = 0;
 
 	while (*line)
 	{
-		if (*line == ' ')
+		if (*line == delim)
 			fldelim = 0;
 		else if (fldelim == 0)
 		{
@@ -22,6 +24,7 @@ unsigned int num_words(char *line)
 	}
 	return (wc);
 }
+
 /**
 * _strlen - function
 * Description: swaps the values of two integers

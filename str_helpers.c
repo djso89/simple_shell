@@ -104,7 +104,7 @@ char **line_to_av(char *line)
 	int av_cnt = 0;
 
 	line[_strlen(line) - 1] = '\0';
-	ac = num_words(line);
+	ac = num_words(line, ' ');
 	av = malloc(sizeof(char *) * (ac + 1));
 	if (av == NULL)
 	{

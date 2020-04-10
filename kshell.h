@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 /*str_helpers.c */
-unsigned int num_words(char *line);
+unsigned int num_words(char *line, char delim);
 int _strlen(char *s);
 char *_strncpy(char *dest, char *src, int n);
 int _strcmp(char *s1, char *s2);
@@ -20,7 +20,7 @@ char **line_to_av(char *line);
 
 
 /* kshell.c */
-void check_prompt();
+void check_prompt(void);
 
 /* free_mem.c */
 void free_av(char **cmds);

@@ -2,7 +2,7 @@
 
 /**
  * _getenv - takes the environment variable and turns it into a string
- * @name: environmental variable 
+ * @name: environmental variable
  * @env: environment vector
  * Return: value of environment name
  */
@@ -13,12 +13,13 @@ char *_getenv(const char *name, char **env)
 	char *env_tok;
 	char *env_val;
 	int i;
+
 	env_name = malloc(sizeof(char) * (strlen(name) + 1));
 	if (!env_name)
 		return (NULL);
 	strncpy(env_name, name, strlen(name) + 1);
 	i = 0;
-	env_tok = strtok(env[i],"=");
+	env_tok = strtok(env[i], "=");
 	while (env[i])
 	{
 		if (strcmp(env_tok, env_name) == 0)
@@ -31,8 +32,8 @@ char *_getenv(const char *name, char **env)
 			return (env_val);
 		}
 		i++;
-	        env_tok = strtok(env[i], "=");
+		env_tok = strtok(env[i], "=");
 	}
 	free(env_name);
-        return (NULL);
+	return (NULL);
 }

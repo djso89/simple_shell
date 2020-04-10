@@ -19,11 +19,13 @@ char **line_to_av(char *line);
 /* error.c */
 
 
-/*kshell.c */
+/* kshell.c */
 void check_prompt();
 
-/*free_mem.c */
+/* free_mem.c */
 void free_av(char **cmds);
 
+/* evn_helpers.c */
+char *_getenv(const char *name, char **env);
 
 #endif /*KSHELL_H */

@@ -80,7 +80,7 @@ char *_getenv(const char *name)
 	char *env_name;
 	char *env_tok;
 	int i;
-
+	/*use strdup instead of malloc */
 	env_name = malloc(sizeof(char) * (strlen(name) + 1));
 	if (env_name == NULL)
 		return (NULL);
@@ -92,7 +92,6 @@ char *_getenv(const char *name)
 		if (strcmp(env_tok, env_name) == 0)
 		{
 			env_tok = strtok(NULL, "\n");
-			free(environ[i]);
 			free(env_name);
 			return (env_tok);
 		}
@@ -165,6 +164,7 @@ char *check_directory(char *usr_cmd)
 		        free_av(dir_av);
 			return (_cmd);
 		}
+		free(_cmd);
 		i++;
 	}
 	free(dir);

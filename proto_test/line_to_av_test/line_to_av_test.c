@@ -65,7 +65,7 @@ char **line_to_av(char *line)
 		return (NULL);
 	}
 	word = strtok(line, " ");
-	printf("%s\n", line);
+	//printf("%s\n", line);
 	while (word)
 	{
 		av[av_cnt] = word;

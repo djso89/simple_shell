@@ -91,7 +91,9 @@ int main(int argc, char **argv, char **envp)
 	unsigned int i = 0;
 	size_t n = 0;
 	ssize_t num_read;
-	//pid_t child;
+	pid_t child;
+	int fork_stat = 0;
+
 	while((num_read = getline(&line,&n,stdin)))
 	{
 		av = line_to_av(line);
@@ -99,10 +101,17 @@ int main(int argc, char **argv, char **envp)
 		{
 			printf("av[%d]: %s\n",i ,av[i]);
 		}
-		if (execve(av[0], av, envp) == -1)
+		child = fork();
+		if (child == 0)
 		{
-			perror("Error");
+			if (execve(av[0], av, envp) == -1)
+			{
+				perror("Error");
+			}
+			return (1);
 		}
+		else
+			wait(&fork_stat);
 		free(av);
 		free(line);
 		fflush(stdin);

@@ -21,16 +21,16 @@ char *usr_cmd_dir(char *dest, char *dir, char *usr_cmd)
 	dest[i] = fs;
 	for (i++, j = 0; usr_cmd[j] != '\0'; j++, i++)
 		dest[i] = usr_cmd[j];
-
+	dest[i] = '\0';
 	return (dest);
 }
 
 int main()
 {
-	char *cmd = "ls";
+	char *cmd = "which";
 	char *dir = "/bin";
 	char *cmd_dir;
-	//unsigned int i = 0;
+	unsigned int i = 0;
 
 	cmd_dir = malloc(sizeof(char) + (strlen(cmd) + strlen(dir) + 2));
 	if (!cmd_dir)
@@ -39,13 +39,12 @@ int main()
 	}
 	cmd_dir = usr_cmd_dir(cmd_dir, dir, cmd);
 	printf("%s\n", cmd_dir);
-/**
 
 	for (i = 0; i <= strlen(cmd_dir); i++)
 	{
 		printf("cmd_dir[%d]: %c\n", i, cmd_dir[i]);
 	}
-**/
+
 	free(cmd_dir);
 
 	return (0);

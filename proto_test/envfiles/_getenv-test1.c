@@ -5,32 +5,28 @@
 
 char *_getenv(const char *name, char **env)
 {
-	char *env_name;
 	char *env_tok;
-	char *env_val;
-	int i;
+	char *env_name;
+	int i, j, name_len;
 
-	env_name = malloc(sizeof(char) * (strlen(name) + 1));
-	if (!env_name)
-		return (NULL);
-	strncpy(env_name, name, strlen(name) + 1);
+	env_name = NULL;
 	i = 0;
-	env_tok = strtok(env[i],"=");
+	j = 0;
+	name_len = strlen(name);
+
 	while (env[i])
 	{
-		if (strcmp(env_tok, env_name) == 0)
+		while(j < name_len)
 		{
-			env_tok = strtok(NULL, "\n");
-			env_val = malloc(sizeof(char) * (strlen(env_tok) + 1));
-			if (!env_val)
-				return (NULL);
-			strncpy(env_val, env_tok, (strlen(env_tok) + 1));
-			return (env_val);
+			env_name[j] = env[i][j];
+			j++;
+		}
+		if (strcmp(env_name, name) == 0)
+		{
+			return (env[i]);
 		}
 		i++;
-	        env_tok = strtok(env[i], "=");
 	}
-	free(env_name);
         return (NULL);
 }
 
@@ -50,10 +46,8 @@ int main(int ac, char **av, char **env)
 
 
         directories = _getenv("LOGNAME",env);
-	/*we should get a string as /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-*/
 	printf("%s\n", directories);
-	free(directories);
+        
 
 	return (0);
 }

@@ -29,7 +29,7 @@ char *usr_cmd_dir(char *dest, char *dir, char *usr_cmd)
 	dest[i] = fs;
 	for (i++, j = 0; usr_cmd[j] != '\0'; j++, i++)
 		dest[i] = usr_cmd[j];
-
+	dest[i] = '\0';
 	return (dest);
 }
 
@@ -75,52 +75,50 @@ unsigned int num_words(char *line, char delim)
 	return (wc);
 }
 
-char *_getenv(const char *name)
+char *_getenv(const char *name, char **env)
 {
 	char *env_name;
-	char *env_tok;
-	int i;
-	/*use strdup instead of malloc */
-	env_name = malloc(sizeof(char) * (strlen(name) + 1));
-	if (env_name == NULL)
-		return (NULL);
-	strncpy(env_name, name, strlen(name) + 1);
+	unsigned int env_len;
+	unsigned int i, j;
+
 	i = 0;
-	env_tok = strtok(environ[i],"=");
-	while (environ[i])
+	while (env[i])
 	{
-		if (strcmp(env_tok, env_name) == 0)
+	        for (j = 0, env_len = 0; env[i][j] != '='; j++)
 		{
-			env_tok = strtok(NULL, "\n");
+			env_len++;
+		}
+		env_name = strndup(env[i], env_len);
+		if (strcmp(env_name, name) == 0)
+		{
 			free(env_name);
-			return (env_tok);
+			return (env[i]);
 		}
 		i++;
-	        env_tok = strtok(environ[i], "=");
+		free(env_name);
 	}
-	free(env_name);
         return (NULL);
 }
-/**alias vall='valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes'
-
+/**
  * check_directory- (char *user_cmd)
  * Description: this function returns string concatenate directory and file
  * @user_cmd: name of the program
  * Returns: string concatenate directory and file if the
  * usr_cmd exist in the directories char *user_cmd,
  */
-char *check_directory(char *usr_cmd)
+char *check_directory(char *usr_cmd, char **env)
 {
 	char *dir;
 	char **dir_av;
 	char *dir_tok;
 	int i;
 	int num_dir;
-
 	char *_cmd;
-	//char *dir_cp;
-	dir = _getenv("PATH");
+
+	dir = _getenv("PATH",env);
+	printf("PATH = %s\n", dir);
 	num_dir = num_words(dir, ':');
+	printf("number of directories = %d\n", num_dir);
 	dir_av = malloc(sizeof(char *) * (num_dir + 1));
 	if (dir_av == NULL)
 	{
@@ -128,7 +126,9 @@ char *check_directory(char *usr_cmd)
 		return (NULL);
 	}
 	/**convert single string dir to list of directories (in av format)**/
-	dir_tok = strtok(dir, ":");
+	dir_tok = strtok(dir, "=");
+	dir_tok = strtok(NULL, ":");
+        printf("%s\n", dir_tok);
 	i = 0;
 	while (dir_tok)
 	{
@@ -139,25 +139,24 @@ char *check_directory(char *usr_cmd)
 			free(dir_tok);
 			return (NULL);
 		}
-		strncpy(dir_av[i], dir_tok, strlen(dir_tok));
+		strncpy(dir_av[i], dir_tok, strlen(dir_tok) + 1);
+	        printf("dir_av[%d]: %s\n",i ,dir_av[i]);
 		dir_tok = strtok(NULL, ":");
 		i++;
 	}
+	printf("dir_av[%d]: %s\n",i ,dir_av[i]);
 	dir_av[i] = NULL;
 
 	i = 0;
-
 	while (dir_av[i])
 	{
-		/*contatenate current dir_av value with cmd*/
-		//_cmd = malloc(sizeof(char) * (2 + strlen(dir_av[i])));
+		printf("dir_av[%d]: %s\n",i ,dir_av[i]);
 		_cmd = malloc(sizeof(char) * (2 + strlen(dir_av[i]) + strlen(usr_cmd)));
 		if (_cmd == NULL)
 		{
 			free_av(dir_av);
 			return (NULL);
 		}
-	        //usr_cmd_dir(char *dest, char *dir, char *usr_cmd);
 		usr_cmd_dir(_cmd, dir_av[i], usr_cmd);
 		if (access(_cmd, X_OK) == 0)
 		{

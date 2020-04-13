@@ -90,7 +90,6 @@ char **line_to_av(char *line)
 		return (NULL);
 	}
 	word = strtok(line_cpy, " ");
-	//printf("%s\n", line);
 	while (word)
 	{
 		av[av_cnt] = word;
@@ -165,7 +164,6 @@ char *check_directory(char *usr_cmd, char **env)
 	dir_tok = strtok(dir_cpy, "=");
 	dir_tok = strtok(NULL, ":");
 	printf("dir: %s\n", dir);
-        //printf("%s\n", dir);
 	i = 0;
 	while (dir_tok)
 	{
@@ -197,7 +195,6 @@ char *check_directory(char *usr_cmd, char **env)
 		usr_cmd_dir(_cmd, dir_av[i], usr_cmd);
 		if (access(_cmd, X_OK) == 0)
 		{
-			//free(dir);
 		        free_av(dir_av);
 			return (_cmd);
 		}

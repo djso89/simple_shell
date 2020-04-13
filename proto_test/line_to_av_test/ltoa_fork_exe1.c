@@ -23,8 +23,10 @@ int main(int argc, char **argv, char **envp)
 			printf("av[%d]: %s\n",i ,av[i]);
 		}
 		printf("av[0] is filename: %s\n", av[0]);
-
-		av[0] =check_directory(av[0], envp);
+		if (av[0][0] != '/')
+		{
+			av[0] = check_directory(av[0], envp);
+		}
 		child = fork();
 		if (child == 0)
 		{

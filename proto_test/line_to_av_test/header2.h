@@ -144,7 +144,7 @@ char *check_directory(char *usr_cmd, char **env)
 	char *dir_tok;
 	int i;
 	int num_dir;
-	char *_cmd;
+	char *_cmd = NULL;
 
 	dir = _getenv("PATH",env);
 	printf("dir: %s\n", dir);
@@ -201,11 +201,16 @@ char *check_directory(char *usr_cmd, char **env)
 		        free_av(dir_av);
 			return (_cmd);
 		}
+		//else
+		//{
+		//	free_av(dir_av);
+		//return(usr_cmd);
+			//}
 		free(_cmd);
 		i++;
 	}
 	free(dir);
-	free(_cmd);
+	//free(_cmd);
 	free_av(dir_av);
 	return (NULL);
 

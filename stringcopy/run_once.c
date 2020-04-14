@@ -5,7 +5,7 @@ void print_av(char **av)
 
 	for (i = 0; av[i]; i++)
 	{
-		printf("line 104: av[%d]: %s\n", i, av[i]);
+		printf("av[%d]: %s\n", i, av[i]);
 	}
 }
 char *get_input()
@@ -34,36 +34,30 @@ int main(int argc, char **argv, char **env)
 
 	pgm_run = 0;
 	done_stat = 0;
-	do {
-		line = get_input();
-		av = line_to_av(line);
-		print_av(av);
-		pgm = fork();
-		if (pgm == 0)
+	
+	line = get_input();
+	av = line_to_av(line);
+	print_av(av);
+	pgm = fork();
+	if (pgm == 0)
+	{
+		pgm_run = execve(av[0], av, env);
+		if (pgm_run == -1)
 		{
-			pgm_run = execve(av[0], av, env);
-			if (pgm_run == -1)
-			{
-				perror("Error: oh no");
-				free_av(av);
-				printf("its freed\n");
-				free(line);
-			}
-		}
-		else
-		{
-			wait(&done_stat);
-			free_av(av);
-			printf("line: %s\n",line);
+			perror("Error: oh no");
 			free(line);
-			printf("freed\n");
+			free_av(av);
+			printf("its freed\n");
 		}
-		fflush(stdin);
-	} while (line != NULL);
-
+	}
+	else
+		wait(&done_stat);
+	free_av(av);
+	//printf("line: %s\n",line);
 	free(line);
-	fflush(stdin);
-	fclose(stdin);
+	//fflush(stdin);
+	//line = NULL;
+	//av = NULL;
 
 	return (0);
 

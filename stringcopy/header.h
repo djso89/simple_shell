@@ -77,6 +77,7 @@ char **line_to_av(char *line)
 	j = 0;
 	while (word)
 	{
+		printf("line 96: word: %s\n", word);
 		av[i] = strdup(word);
 		if (av[i] == NULL)
 		{
@@ -88,7 +89,6 @@ char **line_to_av(char *line)
 			return (NULL);
 		}
 		word = strtok(NULL, " ");
-		printf("line 96: word: %s\n", word);
 		i++;
 	}
 	/*strtok and duplicate end*/

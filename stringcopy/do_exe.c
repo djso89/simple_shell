@@ -1,4 +1,15 @@
 #include "header.h"
+
+static void sigintHandler(int sig_num)
+{
+	(void)sig_num;
+	signal(SIGINT, sigintHandler);
+	//printf("$: ");
+	fflush(stdin);
+	fflush(stdout);
+}
+
+
 void print_av(char **av)
 {
 	unsigned int i;
@@ -22,6 +33,7 @@ char *get_input()
 	return (line);
 }
 
+
 int main(int argc, char **argv, char **env)
 {
 	(void)argc;
@@ -31,6 +43,7 @@ int main(int argc, char **argv, char **env)
 	pid_t pgm;
 	int done_stat;
 	int pgm_run;
+	signal(SIGINT, sigintHandler);
 
 	pgm_run = 0;
 	done_stat = 0;

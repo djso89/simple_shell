@@ -164,10 +164,11 @@ char *_getenv(const char *name, char **env)
 static void sigintHandler(int sig_num) 
 {
 	(void)sig_num;
-    /* Reset handler
-       to catch SIGINT next time.  */
-    signal(SIGINT, sigintHandler);
-    printf("\n Cannot be terminated using Ctrl+C \n");
+    /* Reset handler 
+       to catch SIGINT next time. 
+       Refer http://en.cppreference.com/w/c/program/signal */
+    signal(SIGINT, sigintHandler); 
+    printf("\n Cannot be terminated using Ctrl+C \n"); 
     fflush(stdout);
     check_prompt();
 }

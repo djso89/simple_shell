@@ -1,32 +1,9 @@
 #include "header.h"
-void print_av(char **av)
-{
-	unsigned int i;
 
-	for (i = 0; av[i]; i++)
-	{
-		printf("av[%d]: %s\n", i, av[i]);
-	}
-}
-char *get_input()
-{
-	char *line = NULL;
-	size_t rd_cnt = 0;
-	ssize_t num_read;
-
-	num_read = getline(&line, &rd_cnt, stdin);
-	printf("num_read: %s and bytes: %ld\n", line, rd_cnt);
-	if (num_read == -1)
-		return (NULL);
-	line[num_read - 1] = '\0';
-
-	return (line);
-}
 void free_all(char **av, char *line)
 {
         free_av(av);
 	free(line);
-	
 }
 
 int main(int argc, char **argv, char **env)
@@ -41,15 +18,28 @@ int main(int argc, char **argv, char **env)
 
 	pgm_run = 0;
 	done_stat = 0;
+	signal(SIGINT, sigintHandler);
 	check_prompt();
 	while (1)
 	{
+		
 		line = get_input();
 		av = line_to_av(line);
 		print_av(av);
-		pgm = fork();
 
-		
+		if ((strcmp(av[0], "exit") == 0))
+		{
+			free_all(av, line);
+			av = NULL;
+			line = NULL;
+			pgm = fork();
+			waitpid(pgm, &done_stat, 0);
+		        while ( pgm != 1)
+			{
+				_exit(0);
+			}
+		}
+		pgm = fork();
 		if (pgm == 0)
 		{
 			pgm_run = execve(av[0], av, env);

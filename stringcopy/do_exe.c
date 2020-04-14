@@ -8,16 +8,24 @@ void print_av(char **av)
 		printf("line 104: av[%d]: %s\n", i, av[i]);
 	}
 }
+char *get_input()
+{
+	char *line;
+	size_t rd_cnt = 0;
+	ssize_t num_read;
+
+	num_read = getline (&line, &rd_cnt, stdin);
+	line[num_read - 1] = '\0';
+
+	return (line);
+}
 
 int main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	char *line = NULL;
 	char **av;
-	size_t rd_cnt = 0;
-	ssize_t num_read;
-
+	char *line = NULL;
 	pid_t pgm;
 	int done_stat;
 	int pgm_run;
@@ -25,8 +33,7 @@ int main(int argc, char **argv, char **env)
 	pgm_run = 0;
 	done_stat = 0;
 	do {
-		num_read = getline(&line, &rd_cnt, stdin);
-		line[num_read - 1] = '\0';
+		line = get_input();
 		av = line_to_av(line);
 		print_av(av);
 		pgm = fork();
@@ -37,15 +44,17 @@ int main(int argc, char **argv, char **env)
 			{
 				perror("Error: oh no");
 				free_av(av);
+				free(line);
 			}
 		}
 		else
 		{
 			wait(&done_stat);
 			free_av(av);
+			free(line);
 		}
 		fflush(stdin);
-	} while (num_read != -1);
+	} while (line != NULL);
 
 	free(line);
 	fflush(stdin);

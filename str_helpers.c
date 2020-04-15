@@ -24,7 +24,7 @@ int _strncmp(const char *s1, const char *s2, size_t n)
  * Return: int length of string
  */
 
-int _strlen(char *s)
+unsigned int _strlen(char *s)
 {
 	int i;
 

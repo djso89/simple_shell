@@ -44,7 +44,7 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	char *line = NULL;
+	char *line;
 	char *filename;
 	char **av;
 	pid_t pgm;

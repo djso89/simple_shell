@@ -22,6 +22,13 @@ unsigned int num_words(char *line, char delim);
 char **line_to_av(char *line);
 
 int _strncmp(const char *s1, const char *s2, size_t n);
+
+int _strlen(char *s);
+
+char *_strncpy(char *dest, char *src, int n);
+
+char *_strdup(char *str);
+
 char *_getenv(const char *name, char **env);
 
 void sigintHandler(int sig_num);

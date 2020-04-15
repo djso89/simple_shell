@@ -8,11 +8,11 @@ char *check_input(char *cmd, char **env)
 	struct stat st;
 
 	if (cmd[0] == '/')
-		return (strdup(cmd));
+		return (_strdup(cmd));
 	if (cmd[0] == '.' && cmd[1] == '/')
-		return (strdup(cmd));
+		return (_strdup(cmd));
 	if (cmd[0] == '.' && cmd[1] == '.')
-		return (strdup(cmd));
+		return (_strdup(cmd));
 	dir_av = get_dir(env);
 
 	while (dir_av[i])
@@ -50,6 +50,7 @@ int main(int argc, char **argv, char **env)
 	pid_t pgm;
 	int pgm_run;
 	int pgm_stat;
+
 	while (1)
 	{
 		line = get_input();
@@ -66,7 +67,7 @@ int main(int argc, char **argv, char **env)
 		{
 			free(av[0]);
 			av[0] = NULL;
-			av[0] = strdup(filename);
+			av[0] = _strdup(filename);
 			pgm = fork();
 
 			if (pgm == 0)

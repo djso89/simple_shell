@@ -3,12 +3,11 @@
 void sigintHandler(int sig_num)
 {
 	(void)sig_num;
-    /* Reset handler
-       to catch SIGINT next time.  */
-    signal(SIGINT, sigintHandler);
-    printf("\n Cannot be terminated using Ctrl+C \n");
-    fflush(stdout);
-    check_prompt();
+    /* Reset handler to catch SIGINT next time.  */
+	signal(SIGINT, sigintHandler);
+	printf("\n Cannot be terminated using Ctrl+C \n");
+	fflush(stdout);
+	check_prompt();
 }
 
 

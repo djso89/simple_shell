@@ -7,14 +7,14 @@ unsigned int get_num_dir(char *dir)
 	char *dir_tok;
 	int dir_num;
 
-	dir_len = strlen(dir);
+	dir_len = _strlen(dir);
 	/*copy the PAth string*/
 	dir_cpy = malloc(sizeof(char) * (dir_len + 1));
 	if (!dir_cpy)
 	{
 		return (0);
 	}
-	dir_cpy = strncpy(dir_cpy, dir, dir_len + 1);
+	dir_cpy = _strncpy(dir_cpy, dir, dir_len + 1);
 
 /*parse string into array of strings*/
 	dir_tok = strtok(dir_cpy, "=");
@@ -40,10 +40,10 @@ char **get_dir(char **env)
 
 	dir = _getenv("PATH", env);
 	dir_num = get_num_dir(dir);
-	dir_cpy = malloc(sizeof(char) * (strlen(dir) + 1));
+	dir_cpy = malloc(sizeof(char) * (_strlen(dir) + 1));
 	if (!dir_cpy)
 		return (NULL);
-	dir_cpy = strncpy(dir_cpy, dir, (strlen(dir) + 1));
+	dir_cpy = _strncpy(dir_cpy, dir, (_strlen(dir) + 1));
 	dir_tok = strtok(dir_cpy, "=");
 	dir_tok = strtok(NULL, ":");
 	dir_av = malloc(sizeof(char *) * (dir_num + 1));
@@ -54,13 +54,13 @@ char **get_dir(char **env)
 	}
 	while (dir_tok)
 	{
-		dir_av[i] = malloc(sizeof(char) * (strlen(dir_tok) + 1));
+		dir_av[i] = malloc(sizeof(char) * (_strlen(dir_tok) + 1));
 		if (!dir_av[i])
 		{
 			free_upto_n(dir_av, i);
 			return (NULL);
 		}
-		dir_av[i] = strncpy(dir_av[i], dir_tok, strlen(dir_tok) + 1);
+		dir_av[i] = _strncpy(dir_av[i], dir_tok, _strlen(dir_tok) + 1);
 		dir_tok = strtok(NULL, ":");
 		i++;
 	}
@@ -76,23 +76,23 @@ char *get_dir_cmd(char *dir, char *cmd)
 	unsigned int j;
 	unsigned int k;
 
-	dir_cmd = malloc(sizeof(char) * (strlen(cmd) + strlen(dir) + 2));
+	dir_cmd = malloc(sizeof(char) * (_strlen(cmd) + _strlen(dir) + 2));
 	if (!dir_cmd)
 	{
 		return (NULL);
 	}
-	for (j = 0; j < (strlen(dir) + strlen(cmd) + 1); j++)
+	for (j = 0; j < (_strlen(dir) + _strlen(cmd) + 1); j++)
 	{
 		dir_cmd[j] = '\0';
 	}
-	for (j = 0; j < strlen(dir); j++)
+	for (j = 0; j < _strlen(dir); j++)
 	{
 		dir_cmd[j] = dir[j];
 	}
 	dir_cmd[j] = '/';
 	/*printf("after adding /: dir_cmd is %s\n", dir_cmd);*/
 	j++;
-	for (k = 0; k < strlen(cmd); k++)
+	for (k = 0; k < _strlen(cmd); k++)
 	{
 		dir_cmd[j + k] = cmd[k];
 	}

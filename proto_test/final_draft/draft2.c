@@ -1,4 +1,4 @@
-#include "header.h"
+#include "kshell.h"
 
 char *check_input(char *cmd, char **env)
 {

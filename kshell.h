@@ -2,30 +2,37 @@
 #define KSHELL_H
 
 #include <stdio.h>
-#include <string.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <unistd.h>
+#include <signal.h>
 
-/*str_helpers.c */
-unsigned int num_words(char *line, char delim);
-int _strlen(char *s);
-char *_strncpy(char *dest, char *src, int n);
-int _strcmp(char *s1, char *s2);
-char **line_to_av(char *line);
-
-/* error.c */
-
-
-/* kshell.c */
-void check_prompt(void);
-
-/* free_mem.c */
+void free_upto_n(char **av, unsigned int n);
 void free_av(char **cmds);
 
-/* evn_helpers.c */
+void check_prompt(void);
+
+char *get_input();
+
+unsigned int num_words(char *line, char delim);
+
+char **line_to_av(char *line);
+
+int _strncmp(const char* s1, const char* s2, size_t n);
 char *_getenv(const char *name, char **env);
+
+void sigintHandler(int sig_num);
+
+
+/*directory helpers*/
+
+unsigned int get_num_dir(char *dir);
+char *get_dir_cmd(char *dir, char *cmd);
+char **get_dir(char **env);
+
+
 
 #endif /*KSHELL_H */

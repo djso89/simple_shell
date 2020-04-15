@@ -1,39 +1,33 @@
 #include "kshell.h"
 
-/**
- * _getenv - takes the environment variable and turns it into a string
- * @name: environmental variable
- * @env: environment vector
- * Return: value of environment name
- */
-
 char *_getenv(const char *name, char **env)
 {
-	char *env_name;
-	char *env_tok;
-	char *env_val;
-	int i;
+	char *env_name = NULL;
+	unsigned int env_len;
+	unsigned int i, j;
+	int found;
 
-	env_name = malloc(sizeof(char) * (strlen(name) + 1));
-	if (!env_name)
-		return (NULL);
-	strncpy(env_name, name, strlen(name) + 1);
+	found = 0;
 	i = 0;
-	env_tok = strtok(env[i], "=");
 	while (env[i])
 	{
-		if (strcmp(env_tok, env_name) == 0)
+	        for (j = 0, env_len = 0; env[i][j] != '='; j++)
 		{
-			env_tok = strtok(NULL, "\n");
-			env_val = malloc(sizeof(char) * (strlen(env_tok) + 1));
-			if (!env_val)
-				return (NULL);
-			strncpy(env_val, env_tok, (strlen(env_tok) + 1));
-			return (env_val);
+			env_len++;
+		}
+		env_name = malloc(sizeof(char) * (env_len + 1));
+		if (!env_name)
+			return (NULL);
+		env_name = strncpy(env_name, env[i] ,env_len);
+		found = _strncmp(env_name, name, env_len);
+		if ( found == 0)
+		{
+			free(env_name);
+			return (env[i]);
 		}
 		i++;
-		env_tok = strtok(env[i], "=");
+		free(env_name);
+		env_name = NULL;
 	}
-	free(env_name);
-	return (NULL);
+        return (NULL);
 }

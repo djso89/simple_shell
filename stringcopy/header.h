@@ -79,16 +79,14 @@ char **line_to_av(char *line)
 {
 	char **av;
         unsigned int wcnt;
-	unsigned int i;
-	unsigned int j;
+	unsigned int i = 0;
+	unsigned int j = 0;
 	char *line_cp;
 	char *word;
 
 	line_cp = strdup(line);
 	if (!line_cp)
-	{
 		return (NULL);
-	}
 /*start tokenizing and store into av format*/
 	wcnt = 0;
 	wcnt = num_words(line, ' ');
@@ -127,10 +125,16 @@ char **line_to_av(char *line)
 	return (av);
 }
 
-
+int _strncmp(const char* s1, const char* s2, size_t n)
+{
+    while(n--)
+        if(*s1++!=*s2++)
+            return *(unsigned char*)(s1 - 1) - *(unsigned char*)(s2 - 1);
+    return (0);
+}
 char *_getenv(const char *name, char **env)
 {
-	char *env_name;
+	char *env_name = NULL;
 	unsigned int env_len;
 	unsigned int i, j;
 	int found;
@@ -147,14 +151,16 @@ char *_getenv(const char *name, char **env)
 		if (!env_name)
 			return (NULL);
 		env_name = strncpy(env_name, env[i] ,env_len);
-		found = strcmp(env_name, name);
+		found = _strncmp(env_name, name, env_len);
 		if ( found == 0)
 		{
+			printf("found at: %d\n", i);
 			free(env_name);
 			return (env[i]);
 		}
 		i++;
 		free(env_name);
+		env_name = NULL;
 	}
         return (NULL);
 }
@@ -173,5 +179,36 @@ static void sigintHandler(int sig_num)
 }
 
 
+/*directory helpers*/
 
+unsigned int get_num_dir(char *dir)
+{
+	unsigned int dir_len;
+	char *dir_cpy;
+	char *dir_tok;
+	int dir_num;
+	
+
+	dir_len = strlen(dir);
+	/*copy the PAth string*/
+	dir_cpy = malloc(sizeof(char) * (dir_len + 1));
+	if (!dir_cpy)
+	{
+		return (1);
+	}
+	dir_cpy = strncpy(dir_cpy, dir, dir_len + 1);
+
+/*parse string into array of strings*/
+	dir_tok = strtok(dir_cpy, "=");
+	for (dir_tok = strtok(NULL, ":"),
+		    dir_num = 0;
+	     dir_tok;
+	     dir_num++,
+		     dir_tok = strtok(NULL, ":"))
+	{
+		printf("dir_tok: %s\n", dir_tok);
+	}
+	free(dir_cpy);
+	return (dir_num);
+}
 #endif /*HEADER_H */

@@ -41,11 +41,11 @@ int main(int argc, char **argv, char **env)
 			pgm_run = execve(av[0], av, env);
 			if (pgm_run == -1)
 			{
-				perror("Error: oh no");
+				write(STDERR_FILENO, av[0], strlen(av[0]));
+				write(STDERR_FILENO, ": command not found\n", 21);
 				free_all(av, line);
 				line = NULL;
 				av = NULL;
-				printf("its freed\n");
 			}
 		}
 		else

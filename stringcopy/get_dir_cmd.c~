@@ -1,0 +1,101 @@
+#include "header.h"
+
+char **get_dir(char **env)
+{
+	unsigned int dir_num;
+	char *dir;
+	char *dir_cpy;
+	char *dir_tok;
+	char **dir_av;
+	unsigned int i = 0;
+
+	dir = _getenv("PATH", env);
+	dir_num = get_num_dir(dir);
+	dir_cpy = malloc(sizeof(char) * (strlen(dir) + 1));
+	if (!dir_cpy)
+		return (NULL);
+	dir_cpy = strncpy(dir_cpy, dir, (strlen(dir) + 1));
+	dir_tok = strtok(dir_cpy, "=");
+	dir_tok = strtok(NULL, ":");
+	dir_av = malloc(sizeof(char *) * (dir_num + 1));
+	if (!dir_av)
+	{
+		free(dir_cpy);
+		return (NULL);
+	}
+	while (dir_tok)
+	{
+		dir_av[i] = malloc(sizeof(char) * (strlen(dir_tok) + 1));
+		if (!dir_av[i])
+		{
+			free_upto_n(dir_av, i);
+			return (NULL);
+		}
+		dir_av[i] = strncpy(dir_av[i], dir_tok, strlen(dir_tok) + 1);
+		dir_tok = strtok(NULL, ":");
+		i++;
+	}
+	dir_av[i] = NULL;
+	free(dir_cpy);
+
+	return (dir_av);
+}
+
+
+
+int main(int argc, char **argv, char **env)
+{
+
+	(void)argc;
+	(void)argv;
+	char *cmd = "ls";
+	char *dir_cmd;
+	char **dir_av;
+	//int isSame;
+	unsigned int i;
+	unsigned int j;
+	unsigned int k;
+
+	dir_av = get_dir(env);
+	print_av(dir_av);
+	i = 0;
+	j = 0;
+        while (dir_av[i])
+	{
+		printf("\n\ni is at %d\n", i);
+		dir_cmd = malloc(sizeof(char) * (strlen(cmd) + strlen(dir_av[i]) + 2));
+		if (!dir_cmd)
+		{
+			free_av(dir_av);
+			return (1);
+		}
+		for (j = 0; j < (strlen(dir_av[i]) + strlen(cmd) + 1); j++)
+		{
+			dir_cmd[j] = '\0';
+		}
+	        for (j = 0; dir_av[i][j] != '\0'; j++ )
+		{
+			dir_cmd[j] = dir_av[i][j];
+			//printf("%c\n", dir_cmd[j]);
+		}
+		printf("j is at %d\n", j);
+		dir_cmd[j] = '/';
+		printf("after adding /: dir_cmd is %s\n", dir_cmd);
+		printf("%c\n", dir_cmd[j]);
+		j++;
+		for (k = 0; k < strlen(cmd) + 1; k++)
+		{
+			dir_cmd[j + k] = cmd[k];
+			printf("dir_cmd[%d] is %c\n", j + k, dir_cmd[j + k]);
+		}
+		printf("after adding cmd: dir_cmd is %s\n", dir_cmd);
+		//dir_cmd[k] = '\0';
+		//printf("dir_cmd is %s\n", dir_cmd);
+		free(dir_cmd);
+		dir_cmd = NULL;
+		i++;
+	}
+	free_av(dir_av);
+
+	return (0);
+}

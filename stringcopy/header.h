@@ -10,6 +10,18 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+void free_upto_n(char **av, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i <= n; i++)
+	{
+		free(av[i]);
+	}
+	free(av);
+}
+
+
 void check_prompt(void)
 {
 	if (isatty(STDIN_FILENO))
@@ -187,14 +199,13 @@ unsigned int get_num_dir(char *dir)
 	char *dir_cpy;
 	char *dir_tok;
 	int dir_num;
-	
 
 	dir_len = strlen(dir);
 	/*copy the PAth string*/
 	dir_cpy = malloc(sizeof(char) * (dir_len + 1));
 	if (!dir_cpy)
 	{
-		return (1);
+		return (0);
 	}
 	dir_cpy = strncpy(dir_cpy, dir, dir_len + 1);
 
@@ -206,7 +217,7 @@ unsigned int get_num_dir(char *dir)
 	     dir_num++,
 		     dir_tok = strtok(NULL, ":"))
 	{
-		printf("dir_tok: %s\n", dir_tok);
+		/*printf("dir_tok: %s\n", dir_tok);*/
 	}
 	free(dir_cpy);
 	return (dir_num);

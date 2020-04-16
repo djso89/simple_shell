@@ -45,45 +45,56 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	char *line = NULL;
-	char *filename;
+	char *filename = NULL;
 	char **av;
 	pid_t pgm;
-	int pgm_run;
-	int pgm_stat;
+	int pgm_run = 0;
+	int pgm_stat = 0;
+	//ssize_t num_read;
+	
 	while (1)
 	{
 		line = get_input();
 		av = line_to_av(line);
-		filename = check_input(av[0], env);
-		/*check for error if usr command is in valid*/
-		printf("filename: %s\n", filename);
-		if (filename == NULL)
+		if(av[0][0] != '\0')
 		{
-			write(STDOUT_FILENO, "Error: ", 7);
-			perror(av[0]);
-			
-		}
-		else
-		{
-			free(av[0]);
-			av[0] = NULL;
-			av[0] = strdup(filename);
-			pgm = fork();
-
-			if (pgm == 0)
+			filename = check_input(av[0], env);
+			/*check for error if usr command is in valid*/
+			printf("filename: %s\n", filename);
+			if (filename == NULL)
 			{
-				pgm_run = execve(av[0], av, env);
-				if (pgm_run == -1)
-				{
-				printf("failled\n");
-				}
+				write(STDOUT_FILENO, "Error: ", 7);
+				perror(av[0]);
+				
 			}
 			else
-				wait(&pgm_stat);
+			{
+				free(av[0]);
+				av[0] = NULL;
+				av[0] = strdup(filename);
+				pgm = fork();
+
+				if (pgm == 0)
+				{
+					pgm_run = execve(av[0], av, env);
+					if (pgm_run == -1)
+					{
+						printf("failled\n");
+					}
+				}
+				else
+					wait(&pgm_stat);
+			}
+			free(filename);
+			free(line);
+			free_av(av);
 		}
-		free(filename);
-		free(line);
-		free_av(av);
+	        else
+		{
+			free(line);
+			free_av(av);
+			continue;
+		}
 	}
 	return (0);
 }

@@ -36,8 +36,15 @@ char *get_input()
 	ssize_t num_read;
 
 	num_read = getline(&line, &rd_cnt, stdin);
-	if (num_read == -1)
-		return (NULL);
+	if (num_read == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
+	if (line[0] == '\n')
+	{
+		return (" ");
+	}
 	line[num_read - 1] = '\0';
 
 	return (line);

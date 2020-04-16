@@ -35,15 +35,18 @@ char *get_input()
 	ssize_t num_read;
 
 	num_read = getline(&line, &rd_cnt, stdin);
-	if (num_read == -1)
-		return (NULL);
+        if (num_read == EOF)
+	{
+		free(line);
+		exit(EXIT_SUCCESS);
+	}
 	line[num_read - 1] = '\0';
 
 	return (line);
 }
 /**
  * check_input - a function that checks if filename is valid
- * if the filename is found, returns appended string 
+ * if the filename is found, returns appended string
  * of address and / and cmd
  * @cmd: the user command such as ls pwd
  * @env: envirionment variable for getting direction from PATH env. variable

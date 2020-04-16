@@ -9,8 +9,8 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	(void)argc;
-	char *line, *filename;
+	char *line;
+	char *filename;
 	char **av;
 	pid_t pgm;
 	int pgm_stat, exit_status = 0, cmd_num = 0;
@@ -47,5 +47,6 @@ int main(int argc, char **argv, char **env)
 		exit_status = get_exit_stat(pgm_stat);
 		free3(line, av, filename);
 	}
+	(void)argc;
 	return (0);
 }

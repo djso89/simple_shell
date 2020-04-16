@@ -1,43 +1,5 @@
 #include "kshell.h"
 
-char *check_input(char *cmd, char **env)
-{
-	char *dir_cmd;
-	unsigned int i = 0;
-	char **dir_av;
-	struct stat st;
-
-	if (cmd[0] == '/')
-		return (strdup(cmd));
-	if (cmd[0] == '.' && cmd[1] == '/')
-		return (strdup(cmd));
-	if (cmd[0] == '.' && cmd[1] == '.')
-		return (strdup(cmd));
-	dir_av = get_dir(env);
-
-	while (dir_av[i])
-	{
-		dir_cmd = get_dir_cmd(dir_av[i], cmd);
-		if (!dir_cmd)
-		{
-			free_av(dir_av);
-			return (NULL);
-		}
-		if (stat(dir_cmd, &st) == 0)
-		{
-			free_av(dir_av);
-			return (dir_cmd);
-		}
-		free(dir_cmd);
-		dir_cmd = NULL;
-		i++;
-	}
-	free(dir_cmd);
-	free_av(dir_av);
-	return (NULL);
-
-}
-
 
 int main(int argc, char **argv, char **env)
 {
@@ -50,25 +12,18 @@ int main(int argc, char **argv, char **env)
 	pid_t pgm;
 	int pgm_run = 0;
 	int pgm_stat = 0;
-	ssize_t num_read;
-	size_t read_size;
+	//ssize_t num_read;
+	//size_t read_size;
 
-	num_read = getline(&line, &read_size, stdin);
-	do {
+	while (1)
+	{
+	        line = get_input();
+		/*printf("line: %s\n", line);*/
 		if (line[0] == '\n')
 		{
-			//free_av(av);
-			//free(line);
-			printf("av[0] is null\n");
+			free(line);
 			continue;
 		}
-		if (num_read == EOF)
-		{
-			free(line);
-			exit(EXIT_SUCCESS);
-		}
-		printf("line: %s", line);
-		
 		av = line_to_av(line);
 		filename = check_input(av[0], env);
 /*check for error if usr command is in valid*/
@@ -100,6 +55,6 @@ int main(int argc, char **argv, char **env)
 		free(line);
 		line = NULL;
 		free_av(av);
-	}while ((num_read = getline(&line, &read_size, stdin)));
+	}
 	return (0);
 }

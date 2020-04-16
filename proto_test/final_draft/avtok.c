@@ -27,7 +27,7 @@ char **line_to_av(char *line)
 	unsigned int j = 0;
 	char *line_cp;
 	char *word;
-	line[strlen(line) - 1] = '\0';
+
 	line_cp = strdup(line);
 	if (!line_cp)
 		return (NULL);

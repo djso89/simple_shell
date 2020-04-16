@@ -16,7 +16,7 @@ void free_av(char **cmds);
 void check_prompt(void);
 
 char *get_input();
-
+char *check_input(char *cmd, char **env);
 unsigned int num_words(char *line, char delim);
 
 char **line_to_av(char *line);

@@ -8,7 +8,7 @@
 .B ./hsh
 
 .SH DESCRIPTION
-A simple implentation of a command line interpreter that reads, interprets, then executes commands from a line input accordingly. 
+A simple implentation of a command line interpreter that reads, interprets, then executes commands from a line input accordingly.
 KuppaShell works in either interactive (standard input) or non-interactive (piped from file) modes.
 
 .SH INTERACTIVE MODE EXAMPLE

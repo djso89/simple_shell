@@ -41,3 +41,50 @@ char *get_input()
 
 	return (line);
 }
+/**
+ * check_input - a function that checks if filename is valid
+ * if the filename is found, returns appended string 
+ * of address and / and cmd
+ * @cmd: the user command such as ls pwd
+ * @env: envirionment variable for getting direction from PATH env. variable
+ * Return: appended string of directory and cmd with / in between.
+ * if fails, it returns NULL
+ */
+
+char *check_input(char *cmd, char **env)
+{
+	char *dir_cmd;
+	unsigned int i = 0;
+	char **dir_av;
+	struct stat st;
+
+	if (cmd[0] == '/')
+		return (_strdup(cmd));
+	if (cmd[0] == '.' && cmd[1] == '/')
+		return (_strdup(cmd));
+	if (cmd[0] == '.' && cmd[1] == '.')
+		return (_strdup(cmd));
+	dir_av = get_dir(env);
+
+	while (dir_av[i])
+	{
+		dir_cmd = get_dir_cmd(dir_av[i], cmd);
+		if (!dir_cmd)
+		{
+			free_av(dir_av);
+			return (NULL);
+		}
+		if (stat(dir_cmd, &st) == 0)
+		{
+			free_av(dir_av);
+			return (dir_cmd);
+		}
+		free(dir_cmd);
+		dir_cmd = NULL;
+		i++;
+	}
+	free(dir_cmd);
+	free_av(dir_av);
+	return (NULL);
+
+}

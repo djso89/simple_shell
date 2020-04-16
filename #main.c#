@@ -12,7 +12,6 @@ int main(int argc, char **argv, char **env)
 	pid_t pgm;
 	int pgm_run;
 	int pgm_stat;
-	int exit_status;
 
 	while (1)
 	{
@@ -22,18 +21,13 @@ int main(int argc, char **argv, char **env)
 
 
 		/*check for exit routine*/
-		if ((strncmp(av[0], "exit", _strlen(av[0])) == 0))
-		{
-			free(line);
-			free_av(av);
-			exit(exit_status);
-		}
+		if ( strncmp(av[0], "exit", _strlen(av[0]))
+
 /*check for error if usr command is in valid*/
 		filename = check_input(av[0], env);
 		printf("filename: %s\n", filename);
 		if (filename == NULL)
 		{
-			exit_status = 127;
 			write(STDOUT_FILENO, "Error: ", 7);
 			perror(av[0]);
 		}
@@ -53,10 +47,7 @@ int main(int argc, char **argv, char **env)
 				}
 			}
 			else
-			{
 				wait(&pgm_stat);
-				exit_status = 0;
-			}
 		}
 		free(filename);
 		free(line);

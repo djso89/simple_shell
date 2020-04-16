@@ -54,7 +54,7 @@ char *_strdup(char *str)
 	if (ptr == NULL)
 		return (NULL);
 
-	for (c = 0; c < size; c++)
+	for (c = 0; str[c]; c++)
 		ptr[c] = str[c];
 
 	ptr[c] = '\0';

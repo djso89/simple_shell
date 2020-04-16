@@ -37,3 +37,14 @@ void free_upto_n(char **av, unsigned int n)
 	}
 	free(av);
 }
+/**
+ * free_all - free the line from getline and argument string array
+ * @line: line string from getline
+ * @av: argument string array
+ * Return: Nothing
+ */
+void free_all(char *line, char **av)
+{
+	free(line);
+	free_av(av);
+}

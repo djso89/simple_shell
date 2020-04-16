@@ -1,7 +1,7 @@
 #include "kshell.h"
 void check_exit(int ext_stat,char *cmd, char *line, char **av)
 {
-	if (cmd == NULL)
+	if (cmd[0] == '\0')
 	{
 		return;
 	}
@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	char *line = NULL;
+	char *line;
 	char *filename;
 	char **av;
 	pid_t pgm;
@@ -34,17 +34,6 @@ int main(int argc, char **argv, char **env)
 		line = get_input();
 		av = line_to_av(line);
 		printf("av[0]: %s\n", av[0]);
-		/*eof*/
-		if (av[0] == NULL)
-		{
-			free(line);
-			free_av(av);
-			check_prompt();
-			line = get_input();
-			av = line_to_av(line);
-			//av[0] = " ";
-			continue;
-		}
 /**built-ins: cd, exit, env*/
 		check_exit(exit_status,av[0], line, av);
 /*check for error if usr command is in valid*/
@@ -55,7 +44,7 @@ int main(int argc, char **argv, char **env)
 			write(STDOUT_FILENO, "Error: ", 7);
 			perror(av[0]);
 		}
-		else
+		else if(filename != NULL)
 		{
 			free(av[0]);
 			av[0] = NULL;
@@ -67,7 +56,7 @@ int main(int argc, char **argv, char **env)
 				pgm_run = execve(av[0], av, env);
 				if (pgm_run == -1)
 				{
-					printf("failled\n");
+				perror("failled\n");
 				}
 			}
 			else
@@ -78,7 +67,6 @@ int main(int argc, char **argv, char **env)
 		}
 		free(filename);
 		free(line);
-		line = NULL;
 		free_av(av);
 	}
 	return (0);

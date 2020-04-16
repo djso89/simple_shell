@@ -48,3 +48,10 @@ void free_all(char *line, char **av)
 	free(line);
 	free_av(av);
 }
+
+void free3(char *line, char **av, char *fn)
+{
+	free(line);
+	free_av(av);
+	free(fn);
+}

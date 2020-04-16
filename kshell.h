@@ -14,6 +14,7 @@
 void free_upto_n(char **av, unsigned int n);
 void free_av(char **cmds);
 void free_all(char *line, char **av);
+void free3(char *line, char **av, char *fn);
 /*kshell.c*/
 void check_prompt(void);
 char *get_input();
@@ -31,7 +32,7 @@ char *_strdup(char *str);
 
 /*env_helpers.c*/
 char *_getenv(const char *name, char **env);
-
+void show_env(char **env, char *line, char **av);
 /*this is for handling ctrl - c*/
 void sigintHandler(int sig_num);
 

@@ -1,12 +1,25 @@
 #include "kshell.h"
-
+void check_exit(int ext_stat,char *cmd, char *line, char **av)
+{
+	if (cmd == NULL)
+	{
+		return;
+	}
+	/*check for exit routine*/
+	if ((strncmp(cmd, "exit", _strlen(av[0])) == 0))
+	{
+		free(line);
+		free_av(av);
+		exit(ext_stat);
+	}
+}
 
 int main(int argc, char **argv, char **env)
 {
 
 	(void)argc;
 	(void)argv;
-	char *line;
+	char *line = NULL;
 	char *filename;
 	char **av;
 	pid_t pgm;
@@ -14,23 +27,28 @@ int main(int argc, char **argv, char **env)
 	int pgm_stat;
 	int exit_status;
 
+        
 	while (1)
 	{
+		check_prompt();
 		line = get_input();
 		av = line_to_av(line);
-/**built-ins: cd, exit, env*/
-
-
-		/*check for exit routine*/
-		if ((strncmp(av[0], "exit", _strlen(av[0])) == 0))
+		printf("av[0]: %s\n", av[0]);
+		/*eof*/
+		if (av[0] == NULL)
 		{
 			free(line);
 			free_av(av);
-			exit(exit_status);
+			check_prompt();
+			line = get_input();
+			av = line_to_av(line);
+			//av[0] = " ";
+			continue;
 		}
+/**built-ins: cd, exit, env*/
+		check_exit(exit_status,av[0], line, av);
 /*check for error if usr command is in valid*/
 		filename = check_input(av[0], env);
-		printf("filename: %s\n", filename);
 		if (filename == NULL)
 		{
 			exit_status = 127;
@@ -49,7 +67,7 @@ int main(int argc, char **argv, char **env)
 				pgm_run = execve(av[0], av, env);
 				if (pgm_run == -1)
 				{
-				printf("failled\n");
+					printf("failled\n");
 				}
 			}
 			else
@@ -60,6 +78,7 @@ int main(int argc, char **argv, char **env)
 		}
 		free(filename);
 		free(line);
+		line = NULL;
 		free_av(av);
 	}
 	return (0);

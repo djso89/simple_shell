@@ -33,6 +33,8 @@ char **line_to_av(char *line)
 		return (NULL);
 	wcnt = 0; /*start tokenizing and store into av format*/
 	wcnt = num_words(line, ' ');
+	printf("number of words: %d\n", wcnt);
+	printf("line_cp: %s\n", line_cp);
 	av = malloc(sizeof(char *) * (wcnt + 1));
 	if (!av)
 	{

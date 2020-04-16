@@ -48,7 +48,13 @@ void free_all(char *line, char **av)
 	free(line);
 	free_av(av);
 }
-
+/**
+ * free3 - frees the line, av, and fn string from check_input
+ * @line: string from getline
+ * @av: array of strings tokenized from line
+ * @fn: string from check_input
+ * Return: nothing
+ */
 void free3(char *line, char **av, char *fn)
 {
 	free(line);

@@ -65,11 +65,11 @@ char *check_input(char *cmd, char **env)
 	char **dir_av;
 	struct stat st;
 
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' && stat(cmd, &st) == 0)
 		return (_strdup(cmd));
-	if (cmd[0] == '.' && cmd[1] == '/')
+	if (cmd[0] == '.' && cmd[1] == '/' && stat(cmd, &st) == 0)
 		return (_strdup(cmd));
-	if (cmd[0] == '.' && cmd[1] == '.')
+	if (cmd[0] == '.' && cmd[1] == '.' && stat(cmd, &st) == 0)
 		return (_strdup(cmd));
 	dir_av = get_dir(env);
 

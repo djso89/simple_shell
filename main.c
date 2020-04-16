@@ -13,9 +13,8 @@ int main(int argc, char **argv, char **env)
 	char *line, *filename;
 	char **av;
 	pid_t pgm;
-	int pgm_stat, exit_status, cmd_num;
+	int pgm_stat, exit_status = 0, cmd_num = 0;
 
-	cmd_num = 0;
 	while (1)
 	{
 		cmd_num++;

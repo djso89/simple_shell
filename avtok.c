@@ -1,5 +1,11 @@
 #include "kshell.h"
-
+/**
+ * num_words - a function that returns the number of strings
+ * broken up by delimiter character
+ * @line: string from getline
+ * @delim: delimiter character
+ * Return: number of strings
+ */
 unsigned int num_words(char *line, char delim)
 {
 	int fldelim = 0;
@@ -18,7 +24,12 @@ unsigned int num_words(char *line, char delim)
 	}
 	return (wc);
 }
-
+/**
+ * line_to_av - a function that converts line string from getline in
+ * array of strings.
+ * @line: line from getline
+ * Return: array of strings. NULL if fails.
+ */
 char **line_to_av(char *line)
 {
 	char **av;
@@ -45,7 +56,7 @@ char **line_to_av(char *line)
 		av[i] = _strdup(word);
 		if (av[i] == NULL)
 		{
-		        free_upto_n(av, i);
+			free_upto_n(av, i);
 			return (NULL);
 		}
 		word = strtok(NULL, " ");

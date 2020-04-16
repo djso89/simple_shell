@@ -1,5 +1,9 @@
 #include "kshell.h"
-
+/**
+ * sigintHandler - a function that handles Ctrl + C
+ * @sig_num: not used
+ * Return: Nothing
+ */
 void sigintHandler(int sig_num)
 {
 	(void)sig_num;
@@ -9,9 +13,6 @@ void sigintHandler(int sig_num)
 	fflush(stdout);
 	check_prompt();
 }
-
-
-
 /**
  * check_prompt - a function that print the prompt as long as
  * file descriptor refers to a terminal (TTY)
@@ -26,22 +27,26 @@ void check_prompt(void)
 }
 /**
  * get_input - a function that gets string input in terminal
+ * @exit_status: exit code for when End of File occurs
  * Return: string read from stdin. If getline fails, returns (NULL)
  */
-char *get_input()
+char *get_input(int exit_status)
 {
 	char *line = NULL;
 	size_t rd_cnt = 0;
 	ssize_t num_read;
 
 	num_read = getline(&line, &rd_cnt, stdin);
-        if (num_read == EOF)
+	if (num_read == EOF)
 	{
 		free(line);
-		exit(EXIT_SUCCESS);
+		exit(exit_status);
+	}
+	if (line[0] == '\n' && num_read == 1)
+	{
+		return ("\n");
 	}
 	line[num_read - 1] = '\0';
-
 	return (line);
 }
 /**
@@ -53,7 +58,6 @@ char *get_input()
  * Return: appended string of directory and cmd with / in between.
  * if fails, it returns NULL
  */
-
 char *check_input(char *cmd, char **env)
 {
 	char *dir_cmd;
@@ -89,5 +93,29 @@ char *check_input(char *cmd, char **env)
 	free(dir_cmd);
 	free_av(dir_av);
 	return (NULL);
+}
 
+/**
+ * check_exit - a function that checks if user typed exit
+ * if so, the function will free the line from getline
+ * and array of arguement strings
+ * @ext_stat: exit number
+ * @cmd: user command string
+ * @line: line from getline to clear
+ * @av: array of argument strings to clear
+ * Return: Nothing
+ */
+void check_exit(int ext_stat, char *cmd, char *line, char **av)
+{
+	if (cmd[0] == '\0')
+	{
+		return;
+	}
+	/*check for exit routine*/
+	if ((strncmp(cmd, "exit", _strlen(av[0])) == 0))
+	{
+		free(line);
+		free_av(av);
+		exit(ext_stat);
+	}
 }

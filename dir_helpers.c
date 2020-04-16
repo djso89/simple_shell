@@ -1,5 +1,9 @@
 #include "kshell.h"
-
+/**
+ * get_num_dir - a function that returns number of directories
+ * @dir: directories in string format
+ * Return: number of directories
+ */
 unsigned int get_num_dir(char *dir)
 {
 	unsigned int dir_len;
@@ -28,7 +32,12 @@ unsigned int get_num_dir(char *dir)
 	free(dir_cpy);
 	return (dir_num);
 }
-
+/**
+ * get_dir - function that returns list of directories in form
+ * of array of strings
+ * @env: environment strings
+ * Return: list of directories in string array
+ */
 char **get_dir(char **env)
 {
 	unsigned int dir_num;
@@ -69,7 +78,13 @@ char **get_dir(char **env)
 
 	return (dir_av);
 }
-
+/**
+ * get_dir_cmd - function that puts single directory string and user command
+ * into /"dir"/"cmd" format
+ * @dir: directory string
+ * @cmd: user command string
+ * Return: string that contains /dir/cmd
+ */
 char *get_dir_cmd(char *dir, char *cmd)
 {
 	char *dir_cmd;

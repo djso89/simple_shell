@@ -1,5 +1,10 @@
 #include "kshell.h"
-
+/**
+ * _getenv - function that gets the value of environment variable name
+ * @name: environment variable string
+ * @env: environment array of strings
+ * Return: environment value string. if not found, return NULL
+ */
 char *_getenv(const char *name, char **env)
 {
 	char *env_name = NULL;

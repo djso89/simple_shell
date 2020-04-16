@@ -1,18 +1,15 @@
 #include "kshell.h"
-void check_exit(int ext_stat,char *cmd, char *line, char **av)
+
+int get_exit_stat(int stat)
 {
-	if (cmd[0] == '\0')
-	{
-		return;
-	}
-	/*check for exit routine*/
-	if ((strncmp(cmd, "exit", _strlen(av[0])) == 0))
-	{
-		free(line);
-		free_av(av);
-		exit(ext_stat);
-	}
+	if (stat == 256)
+	        return (1);
+	else if (stat == 512)
+		return (2);
+	else
+	        return (0);
 }
+
 
 int main(int argc, char **argv, char **env)
 {
@@ -25,18 +22,19 @@ int main(int argc, char **argv, char **env)
 	pid_t pgm;
 	int pgm_run;
 	int pgm_stat;
-	int exit_status;
+	int exit_status = 0;
 
-        
 	while (1)
 	{
 		check_prompt();
-		line = get_input();
+		line = get_input(exit_status);
+	        if (line[0] == '\n')
+		{
+			continue;
+		}
 		av = line_to_av(line);
-		printf("av[0]: %s\n", av[0]);
 /**built-ins: cd, exit, env*/
 		check_exit(exit_status,av[0], line, av);
-/*check for error if usr command is in valid*/
 		filename = check_input(av[0], env);
 		if (filename == NULL)
 		{
@@ -64,6 +62,7 @@ int main(int argc, char **argv, char **env)
 				wait(&pgm_stat);
 				exit_status = 0;
 			}
+			exit_status = get_exit_stat(pgm_stat);
 		}
 		free(filename);
 		free(line);

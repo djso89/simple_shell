@@ -59,7 +59,7 @@ $ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
 ___
 ## Installation
-Clone Repository into working directory:
+Clone repository into working directory:
 ```c
 $ git clone https://github.com/djso89/simple_shell.git
  ```
@@ -142,12 +142,7 @@ ___
 Name | Description
 | --- | --- |
 [main.c](https://github.com/djso89/simple_shell/blob/master/main.c) | handles user input
-[kshell.h](https://github.com/djso89/simple_shell/blob/master/kshell.h) | library includes and all function prototypes
-[kshell.c](https://github.com/djso89/simple_shell/blob/master/kshell.c) | prints the prompt for user
-[env_helpers.c](https://github.com/djso89/simple_shell/blob/master/env_helpers.c) | tokenizes environment variables
-[error.c]() | wip
-[free_mem.c](https://github.com/djso89/simple_shell/blob/master/free_mem.c) | frees allocated memory
-[str_helpers.c](https://github.com/djso89/simple_shell/blob/master/str_helpers.c) | functions that manipulate strings including copy and compare
+
 ___
 ### Authors
 * **Daniel So** - [djso89](https://github.com/djso89)

@@ -149,6 +149,7 @@ Name | Description
 [env_helpers.c](https://github.com/djso89/simple_shell/blob/master/env_helpers.c) | tokenizes environment variables
 [error.c](https://github.com/djso89/simple_shell/blob/master/error.c) | handles errors
 [exit_helpers.c](https://github.com/djso89/simple_shell/blob/master/exit_helpers.c) | returns the exit status
+[execute.c](https://github.com/djso89/simple_shell/blob/master/execute.c) | executes commands
 
 ___
 ### Authors

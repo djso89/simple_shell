@@ -1,7 +1,4 @@
 #include "kshell.h"
-
-void check_EOF(ssize_t num_read);
-
 /**
  * main - Entry Point
  * @argc: number of argument count.
@@ -45,21 +42,4 @@ int main(int argc, char **argv, char **env)
 	check_EOF(num_read);
 	free(line);
 	return (0);
-}
-/**
- * check_EOF - a function that takes num_read from getline
- * and see if ctrl-D is pressed. if ctrl+D is pressed, it checks if
- * stdin file descriptor is on terminal.
- * @num_read: number of bytes read from getline
- * Return: nothing
- */
-void check_EOF(ssize_t num_read)
-{
-	if (num_read == EOF)
-	{
-		if (isatty(STDIN_FILENO) != 0)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-		}
-	}
 }

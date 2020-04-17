@@ -12,6 +12,7 @@
 
 /*kshell.c*/
 void check_prompt(void);
+void check_EOF(ssize_t num_read);
 char *get_input();
 char *check_input(char *cmd, char **env);
 void check_exit(int ext_stat, char *cmd, char *line, char **av);

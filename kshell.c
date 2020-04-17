@@ -94,6 +94,23 @@ char *check_input(char *cmd, char **env)
 	free_av(dir_av);
 	return (NULL);
 }
+/**
+ * check_EOF - a function that takes num_read from getline
+ * and see if ctrl-D is pressed. if ctrl+D is pressed, it checks if
+ * stdin file descriptor is on terminal.
+ * @num_read: number of bytes read from getline
+ * Return: nothing
+ */
+void check_EOF(ssize_t num_read)
+{
+	if (num_read == EOF)
+	{
+		if (isatty(STDIN_FILENO) != 0)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+		}
+	}
+}
 
 /**
  * check_exit - a function that checks if user typed exit

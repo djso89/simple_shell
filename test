@@ -1,1 +1,2 @@
-ls -alt
+/bin/ls -alt
+/bin/pwd

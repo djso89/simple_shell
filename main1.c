@@ -1,5 +1,7 @@
 #include "kshell.h"
 
+/*void endofcmd(char **av);*/
+void check_EOF(ssize_t num_read, char *line);
 /**
  * main - Entry Point
  * @argc: number of argument count.
@@ -18,9 +20,11 @@ int main(int argc, char **argv, char **env)
 	(void)env;
 
 	check_prompt();
-	while ((num_read = getline(&line, &n, stdin)) != EOF)
+	while (1)
 	{
+		num_read = getline(&line, &n, stdin);
 		/*printf("line is %s\n", line);*/
+		check_EOF(num_read, line);
 		if (line[0] == '\n' || line[0] == ' ')
 		{	fflush(stdin);
 			check_prompt();
@@ -33,4 +37,20 @@ int main(int argc, char **argv, char **env)
 	}
 	free(line);
 	return (0);
+}
+/**
+ * check_EOF - function that takes num_read from getline
+ * and check for EOF.if true, free the line and exit with 0
+ * @num_read: number of bytes read from getline
+ * @line: line from getline to free
+ * Return: Nothing
+ */
+void check_EOF(ssize_t num_read, char *line)
+{
+	if (num_read == EOF)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		free(line);
+		exit(0);
+	}
 }

@@ -11,7 +11,7 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL, **av;
 	size_t n;
 	ssize_t num_read;
-	int pgm_stat; /*exit_status = 0;cmd_num = 0; */
+	int pgm_stat, exit_status = 0;/*cmd_num = 0; */
 	pid_t pgm;
 	(void)argc;
 	(void)argv;
@@ -40,9 +40,13 @@ int main(int argc, char **argv, char **env)
 		}
 		else
 			wait(&pgm_stat);
+		exit_status = WEXITSTATUS(pgm_stat);
+		printf("pgm exit is %d\n", exit_status);
 		free_av(av);
 		check_prompt();
 	}
+	/*write(STDOUT_FILENO, "\n", 1);*/
+	printf("\npgm exit is %d\n", exit_status);
 	free(line);
 	return (0);
 }

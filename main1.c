@@ -1,13 +1,5 @@
 #include "kshell.h"
-void printav(char **av)
-{
-	int i;
 
-	for(i = 0; av[i]; i++)
-	{
-		printf("av[%d]: is %s \n", i, av[i]);
-	}
-}
 /**
  * main - Entry Point
  * @argc: number of argument count.
@@ -17,7 +9,7 @@ void printav(char **av)
  */
 int main(int argc, char **argv, char **env)
 {
-	char *line = NULL,**av;
+	char *line = NULL, **av;
 	size_t n;
 	ssize_t num_read;
 	/*int pgm_stat; exit_status = 0;cmd_num = 0;*/
@@ -29,19 +21,17 @@ int main(int argc, char **argv, char **env)
 	check_prompt();
 	while ((num_read = getline(&line, &n, stdin)) != EOF)
 	{
-		printf("line is %s\n", line);
-		if(line[0] == '\n' || line[0] == ' ')
+		/*printf("line is %s\n", line);*/
+		if (line[0] == '\n' || line[0] == ' ')
 		{	fflush(stdin);
 			check_prompt();
 			continue;
 		}
-		line[num_read -1] = '\0';
+		line[num_read - 1] = '\0';
 		av = line_to_av(line);
 		printav(av);
-
-
 		free_av(av);
-	        check_prompt();
+		check_prompt();
 	}
 	free(line);
 	return (0);

@@ -22,7 +22,8 @@ int main(int argc, char **argv, char **env)
 	{
 		/*printf("line is %s\n", line);*/
 		if ((line[0] == '\n' || line[0] == ' ') && num_read == 1)
-		{	fflush(stdin);
+		{
+			fflush(stdin);
 			check_prompt();
 			continue;
 		}

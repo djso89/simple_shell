@@ -151,7 +151,7 @@ Name | Description
 [exit_helpers.c](https://github.com/djso89/simple_shell/blob/master/exit_helpers.c) | returns the exit status
 [execute.c](https://github.com/djso89/simple_shell/blob/master/execute.c) | executes commands
 [free_mem.c](https://github.com/djso89/simple_shell/blob/master/free_mem.c) | frees allocated memory
-
+[str_helpers.c](https://github.com/djso89/simple_shell/blob/master/str_helpers.c) | functions that manipulate strings including copy and compare
 ___
 ### Authors
 * **Daniel So** - [djso89](https://github.com/djso89)

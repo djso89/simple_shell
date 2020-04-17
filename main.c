@@ -11,7 +11,8 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL, **av;
 	size_t n;
 	ssize_t num_read;
-	/*int pgm_stat; exit_status = 0;cmd_num = 0; pid_t pgm; */
+	int pgm_stat; /*exit_status = 0;cmd_num = 0; */
+	pid_t pgm;
 	(void)argc;
 	(void)argv;
 	(void)env;
@@ -27,6 +28,18 @@ int main(int argc, char **argv, char **env)
 		}
 		line[num_read - 1] = '\0';
 		av = line_to_av(line);
+
+		pgm = fork();
+
+		if (pgm == 0)
+		{
+			if (execve(av[0], av, NULL) == -1)
+			{
+				perror(argv[0]);
+			}
+		}
+		else
+			wait(&pgm_stat);
 		free_av(av);
 		check_prompt();
 	}

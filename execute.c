@@ -1,5 +1,20 @@
 #include "kshell.h"
 /**
+ * sigintHandler - a function that handles Ctrl + C
+ * @sig_num: not used
+ * Return: Nothing
+ */
+void sigintHandler(int sig_num)
+{
+	(void)sig_num;
+    /* Reset handler to catch SIGINT next time.  */
+	signal(SIGINT, sigintHandler);
+	printf("\n Cannot be terminated using Ctrl+C \n");
+	fflush(stdout);
+	check_prompt();
+}
+
+/**
  * execute - a function that execute the file name
  * @pgm: child process
  * @av: arguments in string

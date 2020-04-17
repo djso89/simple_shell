@@ -6,7 +6,7 @@
  * @env: environment array of strings
  * Return: 0 (Success)
  */
-nt main(int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
 	char *line = NULL, **av;
 	size_t n;

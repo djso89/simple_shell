@@ -6,7 +6,7 @@
  * @env: environment array of strings
  * Return: 0 (Success)
  */
-int main(int argc, char **argv, char **env)
+nt main(int argc, char **argv, char **env)
 {
 	char *line = NULL, **av;
 	size_t n;
@@ -17,16 +17,9 @@ int main(int argc, char **argv, char **env)
 	(void)env;
 
 	check_prompt();
-	while (1)
+	while ((num_read = getline(&line, &n, stdin)) != EOF)
 	{
-		num_read = getline(&line, &n, stdin);
 		/*printf("line is %s\n", line);*/
-		if (num_read == EOF)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			free(line);
-			break;
-		}
 		if (line[0] == '\n' || line[0] == ' ')
 		{	fflush(stdin);
 			check_prompt();

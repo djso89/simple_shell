@@ -145,6 +145,8 @@ Name | Description
 [kshell.h](https://github.com/djso89/simple_shell/blob/master/kshell.h) | library includes and all function prototypes
 [kshell.c](https://github.com/djso89/simple_shell/blob/master/kshell.c) | prints the prompt for user
 [avtok.c](https://github.com/djso89/simple_shell/blob/master/avtok.c) | converts string to array of strings
+[dir_helpers.c](https://github.com/djso89/simple_shell/blob/master/dir_helpers.c) | returns list of directories
+
 ___
 ### Authors
 * **Daniel So** - [djso89](https://github.com/djso89)

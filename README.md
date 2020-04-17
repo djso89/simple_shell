@@ -143,6 +143,7 @@ Name | Description
 | --- | --- |
 [main.c](https://github.com/djso89/simple_shell/blob/master/main.c) | handles user input
 [kshell.h](https://github.com/djso89/simple_shell/blob/master/kshell.h) | library includes and all function prototypes
+[kshell.c](https://github.com/djso89/simple_shell/blob/master/kshell.c) | prints the prompt for user
 
 ___
 ### Authors

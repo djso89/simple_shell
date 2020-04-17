@@ -147,6 +147,7 @@ Name | Description
 [avtok.c](https://github.com/djso89/simple_shell/blob/master/avtok.c) | converts string to array of strings
 [dir_helpers.c](https://github.com/djso89/simple_shell/blob/master/dir_helpers.c) | returns list of directories
 [env_helpers.c](https://github.com/djso89/simple_shell/blob/master/env_helpers.c) | tokenizes environment variables
+[error.c](https://github.com/djso89/simple_shell/blob/master/error.c) | handles errors
 
 ___
 ### Authors

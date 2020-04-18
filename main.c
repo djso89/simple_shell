@@ -56,19 +56,23 @@ int main(int argc, char **argv, char **env)
  */
 int check_spc_nl(char *line)
 {
+	unsigned int i;
+
+	i = 0;
 	/*just look for spc and \n in starting char*/
 	if ((line[0] == '\n' || line[0] == ' '))
 	{
 		if (_strlen(line) >= 2)
 		{
-			if (line[_strlen(line) - 2] == ' ')
+			while (line[i] == ' ')
 			{
-				return (1);
+				if (line[i] >= '!')
+				{
+					return (1);
+				}
+				i++;
 			}
-			else
-			{
-				return (0);
-			}
+			return (0);
 		}
 		if (_strlen(line) == 1)
 		{

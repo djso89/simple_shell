@@ -70,6 +70,10 @@ int check_spc_nl(char *line)
 				return (0);
 			}
 		}
+		if (_strlen(line) == 1)
+		{
+			return (1);
+		}
 	}
 	return (0);
 }

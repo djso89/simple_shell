@@ -13,35 +13,60 @@ void sigintHandler(int sig_num)
 	fflush(stdout);
 	check_prompt();
 }
-
 /**
- * execute - a function that execute the file name
- * @pgm: child process
- * @av: arguments in string
- * @line: line string from getline
- * @env: environment strings
- * @fname: string from check_input to free if program fails
- * Return: the status value obtained after program is done
+ * check_spc_nl - function that checks if line has
+ * bunch of spaces or just newline
+ * @line: string from getline
+ * Return: 1 if the line has many spaces or just a space or newline.
+ * 0 if the line does not starts with newline
  */
-int execute(pid_t pgm, char **av, char *line, char **env, char *fname)
+int check_spc_nl(char *line)
 {
-	int stat = 0;
-	int pgm_run;
+	unsigned int i;
 
-	if (pgm == 0)
+	i = 0;
+	/*just look for spc and \n in starting char*/
+	if ((line[0] == '\n' || line[0] == ' '))
 	{
-		pgm_run = execve(av[0], av, env);
-		if (pgm_run == -1)
+		if (line[0] == ' ' && _strlen(line) >= 2)
 		{
-			perror("Error");
-			free(line);
-			free_av(av);
-			free(fname);
-			exit(126);
+			while (line[i] == ' ')
+			{
+				i++;
+			}
+			if (line[i] == '\n')
+			{
+				i = 0;
+				return (1);
+			}
+			return (0);
+		}
+		if (_strlen(line) == 1)
+		{
+			return (1);
 		}
 	}
-	else
-		wait(&stat);
+	return (0);
+}
+/**
+ * execute - a function that execute the file name
+ * @av: arguments in string
+ * @env: environment strings
+ * @argv0: executable file name.
+ * Return: the status value obtained after program is done
+ */
+int execute(char **av, char **env, char *argv0)
+{
+	pid_t pgm;
+	int pgm_stat;
 
-	return (stat);
+	pgm = fork();
+	if (pgm == 0)
+	{
+		if (execve(av[0], av, env) == -1)
+			perror(argv0);
+	}
+	else
+		wait(&pgm_stat);/*exit_status = WEXITSTATUS(pgm_stat);*/
+	return (pgm_stat);
 }

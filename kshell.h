@@ -29,8 +29,7 @@ char **get_dir(char **env);
 /*env_helpers.c*/
 char *_getenv(const char *name, char **env);
 void show_env(char **env, char *line, char **av);
-/*this is for handling ctrl - c*/
-void sigintHandler(int sig_num);
+
 
 /*error.c*/
 int _putchar(char c);
@@ -43,7 +42,12 @@ void errno_perm(int *es, char *argv0, char **av, char *line, int cn, char *fn);
 int get_exit_stat(int stat);
 
 /*execute.c*/
-int execute(pid_t pgm, char **av, char *line, char **env, char *fname);
+int execute(char **av, char **env, char *fname);
+/*this is for handling ctrl - c*/
+void sigintHandler(int sig_num);
+int check_spc_nl(char *line);
+
+
 
 /*free_mem.c*/
 void free_upto_n(char **av, unsigned int n);

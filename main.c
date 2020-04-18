@@ -1,4 +1,5 @@
 #include "kshell.h"
+int check_spc_nl(char *line);
 /**
  * main - Entry Point
  * @argc: number of argument count.
@@ -13,6 +14,7 @@ int main(int argc, char **argv, char **env)
 	ssize_t num_read;
 	int pgm_stat;/* exit_status = 0;cmd_num = 0; */
 	pid_t pgm;
+	int spc_flag = 0;
 	(void)argc;
 	(void)argv;
 	(void)env;
@@ -21,9 +23,10 @@ int main(int argc, char **argv, char **env)
 	while ((num_read = getline(&line, &n, stdin)) != EOF)
 	{
 		/*printf("line is %s\n", line);*/
-		if ((line[0] == '\n' || line[0] == ' ') && num_read == 1)
+		spc_flag = check_spc_nl(line);
+		if (spc_flag == 1)
 		{
-			fflush(stdin);
+			spc_flag = 0;
 			check_prompt();
 			continue;
 		}
@@ -42,5 +45,30 @@ int main(int argc, char **argv, char **env)
 	}
 	check_EOF(num_read);
 	free(line);
+	return (0);
+}
+/**
+ * check_spc_nl - function that checks if line has
+ * bunch of spaces or just newline
+ * @line: string from getline
+ * Return: 1 if the line has many spaces or just a space or newline.
+ * 0 if the line does not starts with newline
+ */
+int check_spc_nl(char *line)
+{
+	if ((line[0] == '\n' || line[0] == ' '))
+	{
+		if (_strlen(line) >= 2)
+		{
+			if (line[_strlen(line) - 1] == ' ')
+			{
+				return (1);
+			}
+			else
+			{
+				return (0);
+			}
+		}
+	}
 	return (0);
 }

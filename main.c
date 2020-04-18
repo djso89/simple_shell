@@ -62,15 +62,16 @@ int check_spc_nl(char *line)
 	/*just look for spc and \n in starting char*/
 	if ((line[0] == '\n' || line[0] == ' '))
 	{
-		if (_strlen(line) >= 2)
+		if (line[0] == ' ' && _strlen(line) >= 2)
 		{
 			while (line[i] == ' ')
 			{
-				if (line[i] >= '!')
-				{
-					return (1);
-				}
 				i++;
+			}
+			if (line[i] == '\n')
+			{
+				i = 0;
+				return (1);
 			}
 			return (0);
 		}

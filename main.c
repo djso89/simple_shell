@@ -48,6 +48,7 @@ int main(int argc, char **argv, char **env)
 		{
 			exit_status = 0;
 			free(av[0]);
+			/*printf("filename is %s\n", filename);*/
 			av[0] = _strdup(filename);
 			execute(av, env, argv[0]);
 		}

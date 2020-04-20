@@ -30,13 +30,10 @@ char **get_dir(char **env);
 char *_getenv(const char *name, char **env);
 void show_env(char **env, char *line, char **av);
 
-
 /*error.c*/
 int _putchar(char c);
-void print_number(int n);
-void show_error(char *argv, char *cmd, int e_num, int cmd_num);
-void errno_file(int *e_num, char *argv0, char **av, char *line, int cmd_num);
-void errno_perm(int *es, char *argv0, char **av, char *line, int cn, char *fn);
+char *convert(long int num, int base);
+int err_not_found(char *argv0, char *av0, int cmd_num);
 
 /*exit_helpers.c*/
 int get_exit_stat(int stat);

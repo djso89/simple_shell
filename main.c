@@ -1,5 +1,5 @@
 #include "kshell.h"
-char *convert(long int num, int base);
+
 /**
  * main - Entry Point
  * @argc: number of argument count.
@@ -21,7 +21,6 @@ int main(int argc, char **argv, char **env)
 	while ((num_read = getline(&line, &n, stdin)) != EOF)
 	{
 		cmd_num++;
-		/*printf("line is %s\n", line);*/
 		spc_flag = check_spc_nl(line);
 		if (spc_flag == 1)
 		{
@@ -33,22 +32,11 @@ int main(int argc, char **argv, char **env)
 		av = line_to_av(line);
 		filename = check_input(av[0], env);
 		if (filename == NULL)
-		{
-			write(STDERR_FILENO, argv[0], _strlen(argv[0]));
-			write(STDERR_FILENO, ":", 1);
-			write(STDERR_FILENO, " ", 1);
-			write(STDERR_FILENO, convert(cmd_num, 10), _strlen(convert(cmd_num, 10)));
-			write(STDERR_FILENO, ":", 1);
-			write(STDERR_FILENO, " ", 1);
-			write(STDERR_FILENO, av[0], _strlen(av[0]));
-			write(STDERR_FILENO, ": not found\n", 12);
-			exit_status = 127;
-		}
+			exit_status = err_not_found(argv[0], av[0], cmd_num);
 		else
 		{
 			exit_status = 0;
 			free(av[0]);
-			/*printf("filename is %s\n", filename);*/
 			av[0] = _strdup(filename);
 			execute(av, env, argv[0]);
 		}
@@ -59,36 +47,4 @@ int main(int argc, char **argv, char **env)
 	check_EOF(num_read);
 	free(line);
 	return (exit_status);
-}
-/**
- * convert - converter function, a clone of itoa
- * @num: number
- * @base: base
- *
- * Return: string
- */
-char *convert(long int num, int base)
-{
-	static char *array = "0123456789abcdef";
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
-
-	if (num < 0)
-	{
-		n = -num;
-		sign = '-';
-	}
-	ptr = &buffer[49];
-	*ptr = '\0';
-
-	do {
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
-
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
 }

@@ -76,7 +76,6 @@ char *check_input(char *cmd, char **env)
 		dir_cmd = NULL;
 		i++;
 	}
-	free(dir_cmd);
 	free_av(dir_av);
 	return (NULL);
 }

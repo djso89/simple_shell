@@ -12,10 +12,8 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL, *filename, **av;
 	size_t n;
 	ssize_t num_read;
-	int exit_status = 0;
-	int spc_flag = 0, cmd_num = 0;
+	int exit_status = 0, spc_flag = 0, cmd_num = 0;
 	(void)argc;
-	/*(void)argv;*/
 
 	check_prompt();
 	while ((num_read = getline(&line, &n, stdin)) != EOF)
@@ -30,6 +28,11 @@ int main(int argc, char **argv, char **env)
 		}
 		line[num_read - 1] = '\0';
 		av = line_to_av(line);
+		if (_strncmp(av[0], "exit", _strlen(av[0])) == 0)
+		{
+			free_all(line, av);
+			exit(exit_status);
+		}
 		filename = check_input(av[0], env);
 		if (filename == NULL)
 			exit_status = err_not_found(argv[0], av[0], cmd_num);
@@ -40,8 +43,7 @@ int main(int argc, char **argv, char **env)
 			av[0] = _strdup(filename);
 			execute(av, env, argv[0]);
 		}
-		free(filename);
-		free_av(av);
+		free_all(filename, av);
 		check_prompt();
 	}
 	check_EOF(num_read);

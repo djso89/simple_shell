@@ -58,6 +58,6 @@ void free_all(char *line, char **av)
 void free3(char *line, char **av, char *fn)
 {
 	free(line);
-	free_av(av);
 	free(fn);
+	free_av(av);
 }

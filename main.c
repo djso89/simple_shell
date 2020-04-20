@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL, *filename, **av;
 	size_t n;
 	ssize_t num_read;
-	int exit_status = 0, spc_flag = 0, cmd_num = 0, i;
+	int exit_status = 0, spc_flag = 0, cmd_num = 0;
 	(void)argc;
 
 	check_prompt();
@@ -40,8 +40,7 @@ int main(int argc, char **argv, char **env)
 			exit_status = 0;
 			free(av[0]);
 			av[0] = _strdup(filename);
-			i = execute(av, env, argv[0]);
-			/*printf("i is %d\n", i);*/
+			execute(av, env, argv[0]);
 		}
 		free_all(filename, av);
 		check_prompt();

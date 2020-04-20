@@ -41,7 +41,7 @@ int main(int argc, char **argv, char **env)
 			free(av[0]);
 			av[0] = _strdup(filename);
 			i = execute(av, env, argv[0]);
-			printf("i is %d\n", i);
+			/*printf("i is %d\n", i);*/
 		}
 		free_all(filename, av);
 		check_prompt();

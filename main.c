@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL, *filename, **av;
 	size_t n;
 	ssize_t num_read;
-	int exit_status = 0, spc_flag = 0, cmd_num = 0;
+	int exit_status = 0, spc_flag = 0, cmd_num = 0, i;
 	(void)argc;
 
 	check_prompt();
@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
 		}
 		line[num_read - 1] = '\0';
 		av = line_to_av(line);
-		if (_strncmp(av[0], "exit", _strlen(av[0])) == 0)
+		if (_strncmp(av[0], "exit", _strlen("exit")) == 0)
 		{
 			free_all(line, av);
 			exit(exit_status);
@@ -41,7 +41,8 @@ int main(int argc, char **argv, char **env)
 			exit_status = 0;
 			free(av[0]);
 			av[0] = _strdup(filename);
-			execute(av, env, argv[0]);
+			i = execute(av, env, argv[0]);
+			printf("i is %d\n", i);
 		}
 		free_all(filename, av);
 		check_prompt();

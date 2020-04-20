@@ -40,7 +40,7 @@ int main(int argc, char **argv, char **env)
 			exit_status = 0;
 			free(av[0]);
 			av[0] = _strdup(filename);
-			execute(av, env, argv[0]);
+			exit_status = execute(av, env, argv[0]);
 		}
 		free_all(filename, av);
 		check_prompt();

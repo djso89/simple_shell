@@ -58,7 +58,7 @@ int check_spc_nl(char *line)
 int execute(char **av, char **env, char *argv0)
 {
 	pid_t pgm;
-	int pgm_stat;
+	int pgm_stat, exit_num;
 
 	pgm = fork();
 	if (pgm == 0)
@@ -67,6 +67,7 @@ int execute(char **av, char **env, char *argv0)
 			perror(argv0);
 	}
 	else
-		wait(&pgm_stat);/*exit_status = WEXITSTATUS(pgm_stat);*/
-	return (pgm_stat);
+		wait(&pgm_stat);
+	exit_num = WEXITSTATUS(pgm_stat);
+	return (exit_num);
 }

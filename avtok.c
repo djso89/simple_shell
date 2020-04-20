@@ -38,6 +38,7 @@ char **line_to_av(char *line)
 	char *line_cp;
 	char *word;
 
+	line[_strlen(line) - 1] = '\0';
 	line_cp = _strdup(line);
 	if (!line_cp)
 		return (NULL);

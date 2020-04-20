@@ -26,7 +26,6 @@ int main(int argc, char **argv, char **env)
 			check_prompt();
 			continue;
 		}
-		line[num_read - 1] = '\0';
 		av = line_to_av(line);
 		if (_strncmp(av[0], "exit", _strlen("exit")) == 0)
 		{

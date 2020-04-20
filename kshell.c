@@ -46,9 +46,8 @@ char *get_input(int exit_status)
  */
 char *check_input(char *cmd, char **env)
 {
-	char *dir_cmd;
+	char *dir_cmd, **dir_av;
 	unsigned int i = 0;
-	char **dir_av;
 	struct stat st;
 
 	if (cmd[0] == '/' && stat(cmd, &st) == 0)
@@ -58,7 +57,8 @@ char *check_input(char *cmd, char **env)
 	if (cmd[0] == '.' && cmd[1] == '.' && stat(cmd, &st) == 0)
 		return (_strdup(cmd));
 	dir_av = get_dir(env);
-
+	if (!dir_av)
+		return (NULL);
 	while (dir_av[i])
 	{
 		dir_cmd = get_dir_cmd(dir_av[i], cmd);

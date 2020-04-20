@@ -48,6 +48,8 @@ char **get_dir(char **env)
 	unsigned int i = 0;
 
 	dir = _getenv("PATH", env);
+	if (!dir)
+		return (NULL);
 	dir_num = get_num_dir(dir);
 	dir_cpy = malloc(sizeof(char) * (_strlen(dir) + 1));
 	if (!dir_cpy)

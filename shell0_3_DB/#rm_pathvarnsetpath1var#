@@ -1,0 +1,5 @@
+!#/bin/bash
+cp "/bin/ls"	"$PWD/hbtn_ls"
+   	     export PATH1="$PWD"
+		OLDPATH="$PATH"
+	unset PATH

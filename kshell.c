@@ -84,9 +84,10 @@ char *check_input(char *cmd, char **env)
  * and see if ctrl-D is pressed. if ctrl+D is pressed, it checks if
  * stdin file descriptor is on terminal.
  * @num_read: number of bytes read from getline
+ * @line: line string to free
  * Return: nothing
  */
-void check_EOF(ssize_t num_read)
+void check_EOF(ssize_t num_read, char *line)
 {
 	if (num_read == EOF)
 	{
@@ -95,29 +96,5 @@ void check_EOF(ssize_t num_read)
 			write(STDOUT_FILENO, "\n", 1);
 		}
 	}
-}
-
-/**
- * check_exit - a function that checks if user typed exit
- * if so, the function will free the line from getline
- * and array of arguement strings
- * @ext_stat: exit number
- * @cmd: user command string
- * @line: line from getline to clear
- * @av: array of argument strings to clear
- * Return: Nothing
- */
-void check_exit(int ext_stat, char *cmd, char *line, char **av)
-{
-	if (cmd[0] == '\0')
-	{
-		return;
-	}
-	/*check for exit routine*/
-	if ((strncmp(cmd, "exit", _strlen(av[0])) == 0))
-	{
-		free(line);
-		free_av(av);
-		exit(ext_stat);
-	}
+	free(line);
 }

@@ -12,10 +12,10 @@
 
 /*kshell.c*/
 void check_prompt(void);
-void check_EOF(ssize_t num_read);
+void check_EOF(ssize_t num_read, char *line);
 char *get_input();
 char *check_input(char *cmd, char **env);
-void check_exit(int ext_stat, char *cmd, char *line, char **av);
+
 
 /*avtok.c*/
 unsigned int num_words(char *line, char delim);
@@ -28,7 +28,7 @@ char **get_dir(char **env);
 
 /*env_helpers.c*/
 char *_getenv(const char *name, char **env);
-void show_env(char **env, char *line, char **av);
+void show_env(char **env, char **av);
 
 /*error.c*/
 int _putchar(char c);
@@ -37,6 +37,7 @@ int err_not_found(char *argv0, char *av0, int cmd_num);
 
 /*exit_helpers.c*/
 int get_exit_stat(int stat);
+void check_exit(int exit_status, char **av, char *line);
 
 /*execute.c*/
 int execute(char **av, char **env, char *fname);

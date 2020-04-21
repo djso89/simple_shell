@@ -1,0 +1,6 @@
+#!/bin/bash
+current_env=$(/usr/bin/env)
+	for i in `/usr/bin/env | /usr/bin/cut -d'=' -f1`
+	do
+		unset $i
+	done

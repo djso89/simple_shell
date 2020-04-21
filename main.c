@@ -27,10 +27,12 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		av = line_to_av(line);
-		if (_strncmp(av[0], "exit", _strlen("exit")) == 0)
+		check_exit(exit_status, av, line);
+		if (_strncmp(av[0], "env", _strlen("env")) == 0)
 		{
-			free_all(line, av);
-			exit(exit_status);
+			show_env(env, av);
+			check_prompt();
+			continue;
 		}
 		filename = check_input(av[0], env);
 		if (filename == NULL)
@@ -45,7 +47,6 @@ int main(int argc, char **argv, char **env)
 		free_all(filename, av);
 		check_prompt();
 	}
-	check_EOF(num_read);
-	free(line);
+	check_EOF(num_read, line);
 	return (exit_status);
 }

@@ -40,11 +40,10 @@ char *_getenv(const char *name, char **env)
  * show_env - a function that displays environment
  * and frees array of arguments and line from getline
  * @env: environment array of strings
- * @line: line from getline
  * @av: array of argument strings
  * Return: Nothing
  */
-void show_env(char **env, char *line, char **av)
+void show_env(char **env, char **av)
 {
 	unsigned int i;
 
@@ -55,5 +54,5 @@ void show_env(char **env, char *line, char **av)
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	free_all(line, av);
+	free_av(av);
 }

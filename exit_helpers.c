@@ -32,4 +32,6 @@ void check_exit(int exit_status, char **av, char *line)
 		free_all(line, av);
 		exit(exit_status);
 	}
+	else
+		return;
 }

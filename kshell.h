@@ -13,9 +13,8 @@
 /*kshell.c*/
 void check_prompt(void);
 void check_EOF(ssize_t num_read, char *line);
-char *get_input();
 char *check_input(char *cmd, char **env);
-
+int pgm_go(char *argv0, char **av, char **env, int cmd_num);
 
 /*avtok.c*/
 unsigned int num_words(char *line, char delim);

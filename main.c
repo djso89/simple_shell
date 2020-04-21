@@ -9,7 +9,7 @@
  */
 int main(int argc, char **argv, char **env)
 {
-	char *line = NULL, *filename, **av;
+	char *line = NULL, **av;
 	size_t n;
 	ssize_t num_read;
 	int exit_status = 0, spc_flag = 0, cmd_num = 0;
@@ -34,17 +34,8 @@ int main(int argc, char **argv, char **env)
 			check_prompt();
 			continue;
 		}
-		filename = check_input(av[0], env);
-		if (filename == NULL)
-			exit_status = err_not_found(argv[0], av[0], cmd_num);
-		else
-		{
-			exit_status = 0;
-			free(av[0]);
-			av[0] = _strdup(filename);
-			exit_status = execute(av, env, argv[0]);
-		}
-		free_all(filename, av);
+		/*look through directories and execute cmd*/
+		exit_status = pgm_go(argv[0], av, env, cmd_num);
 		check_prompt();
 	}
 	check_EOF(num_read, line);

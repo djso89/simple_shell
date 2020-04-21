@@ -12,30 +12,6 @@ void check_prompt(void)
 	}
 }
 /**
- * get_input - a function that gets string input in terminal
- * @exit_status: exit code for when End of File occurs
- * Return: string read from stdin. If getline fails, returns (NULL)
- */
-char *get_input(int exit_status)
-{
-	char *line = NULL;
-	size_t rd_cnt = 0;
-	ssize_t num_read;
-
-	num_read = getline(&line, &rd_cnt, stdin);
-	if (num_read == EOF)
-	{
-		free(line);
-		exit(exit_status);
-	}
-	if (line[0] == '\n' && num_read == 1)
-	{
-		return ("\n");
-	}
-	line[num_read - 1] = '\0';
-	return (line);
-}
-/**
  * check_input - a function that checks if filename is valid
  * if the filename is found, returns appended string
  * of address and / and cmd
@@ -97,4 +73,32 @@ void check_EOF(ssize_t num_read, char *line)
 		}
 	}
 	free(line);
+}
+/**
+ * pgm_go - function that searches user command in directories
+ * obtained from PATH environment variable, and execute if user command
+ * exist in the one of directories
+ * @argv0: object file name
+ * @av: argument strings
+ * @env: environment strings
+ * @cmd_num: command number to print
+ * Return: program exit status
+ */
+int pgm_go(char *argv0, char **av, char **env, int cmd_num)
+{
+	char *filename;
+	int exit_status = 0;
+
+	filename = check_input(av[0], env);
+	if (filename == NULL)
+		exit_status = err_not_found(argv0, av[0], cmd_num);
+	else
+	{
+		exit_status = 0;
+		free(av[0]);
+		av[0] = _strdup(filename);
+		exit_status = execute(av, env, argv0);
+	}
+	free_all(filename, av);
+	return (exit_status);
 }
